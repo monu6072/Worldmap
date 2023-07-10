@@ -11,3 +11,37 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#Search {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  z-index: 1000;
+  border-radius: 14px;
+}
+
+#Search input[type="text"] {
+  width: 300px;
+  padding: 10px;
+  border-radius: 14px;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#Search button {
+  position: absolute;
+  padding: 10px;
+  margin-left: -61px;
+  border: none;
+  border-radius: 14px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+/* Center the map container vertically */
+#Map {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

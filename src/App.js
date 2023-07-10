@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Polygon, useMap, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, useMap, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { statesData } from './data.js';
 import L from 'leaflet';
 import './App.css';
+import {statesData} from './Geo.js'
 
 const center = [22.738437876049627, 79.31227549359568];
-
 function MapSearch({ countryName }) {
   const map = useMap();
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -14,8 +13,9 @@ function MapSearch({ countryName }) {
   useEffect(() => {
     if (countryName) {
       const country = statesData.features.find(
-        (state) => state.properties.name.toLowerCase() === countryName.toLowerCase()
+        (state) => state.properties.name_en.toLowerCase() === countryName.toLowerCase()
       );
+      console.log(country)
 
       if (country) {
         const coordinates = country.geometry.coordinates[0].map((item) => [item[1], item[0]]);
@@ -43,7 +43,7 @@ function MapSearch({ countryName }) {
     >
       <Popup>
         <div>
-          <h3>{selectedCountry.properties.name}</h3>
+          <h3>{selectedCountry.properties.admin}</h3>
           <p>Population: {selectedCountry.properties.population}</p>
           <p>Capital: {selectedCountry.properties.capital}</p>
         </div>
@@ -62,16 +62,15 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={handleSearch} style={{backgroundColor:"ghostwhite"}}>
-        <input type="text" name="search" placeholder="Search..." style={{width:"300px" , textAlign:"center"}} />
+      <form onSubmit={handleSearch} id='Search' style={{backgroundColor:"ghostwhite"}}>
+        <input  type="text" name="search" placeholder="Search..."  />
         <button type="submit">Search</button>
       </form>
-      <MapContainer center={center} zoom={10} style={{ width: '100vw', height: '95vh' , marginTop:"10px" }}>
+      <MapContainer id='Map' center={center} zoom={10} style={{ width: '100vw', height: '100vh' }}>
         <TileLayer
           url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}.png?key=a9oLZQ0LBwtmPDiCKIln"
           attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a>'
         />
-
         <MapSearch countryName={searchTerm} />
       </MapContainer>
     </div>
